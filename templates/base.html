@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}CareScope Analytics{% endblock %}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+<div class="layout">
+  <aside class="sidebar">
+    <a class="brand" href="{{ url_for('dashboard') }}"><span class="brand-mark">+</span><span>CareScope<small>HOSPITAL ANALYTICS</small></span></a>
+    <div class="nav-label">WORKSPACE</div>
+    <nav>
+      <a class="{{ 'active' if request.endpoint=='dashboard' else '' }}" href="{{ url_for('dashboard') }}">▦ <span>Dashboard</span></a>
+      <a class="{{ 'active' if request.endpoint in ['patients_page','add_patient','patient_history'] else '' }}" href="{{ url_for('patients_page') }}">♙ <span>Patients</span></a>
+      <a class="{{ 'active' if request.endpoint in ['visits_page','add_visit'] else '' }}" href="{{ url_for('visits_page') }}">▤ <span>Visit records</span></a>
+      <a class="{{ 'active' if request.endpoint=='reports' else '' }}" href="{{ url_for('reports') }}">▥ <span>Reports & charts</span></a>
+      <a class="{{ 'active' if request.endpoint=='upload_csv' else '' }}" href="{{ url_for('upload_csv') }}">⇧ <span>CSV upload</span></a>
+    </nav>
+    <div class="sidebar-note"><span class="status-dot"></span> Demo environment<small>Synthetic records only</small></div>
+  </aside>
+  <main class="main">
+    <header class="topbar"><div><div class="eyebrow">HOSPITAL OPERATIONS</div><div class="top-title">{% block page_title %}Overview{% endblock %}</div></div><div class="top-actions"><span class="today">{{ current_date if current_date else '' }}</span><span class="avatar">CS</span></div></header>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}<div class="flash-wrap">{% for category,message in messages %}<div class="flash {{ category }}">{{ message }}</div>{% endfor %}</div>{% endif %}
+    {% endwith %}
+    <section class="content">{% block content %}{% endblock %}</section>
+    <footer>CareScope Analytics · Operational statistics only, not clinical advice.</footer>
+  </main>
+</div>
+</body>
+</html>

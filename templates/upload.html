@@ -1,0 +1,6 @@
+{% extends "base.html" %}{% block title %}CSV upload | CareScope{% endblock %}{% block page_title %}Import data{% endblock %}
+{% block content %}<div class="page-intro"><div><h1>Import synthetic patients</h1><p>Upload a CSV file to add multiple demo patient records.</p></div></div>
+<div class="panel form-panel upload-panel"><div class="upload-icon">⇧</div><h2>Upload a CSV file</h2><p>Your file must include these column names: <code>patient_name, age, gender</code>.</p><form method="post" enctype="multipart/form-data"><label class="file-label">Choose CSV file<input type="file" name="file" accept=".csv,text/csv" required></label><button class="btn primary">Import patients</button></form><div class="sample-csv"><b>Example CSV</b><pre>patient_name,age,gender
+Sample Patient A,28,Female
+Sample Patient B,42,Male</pre><button class="btn secondary" type="button" onclick="downloadExample()">Download example CSV</button></div></div>
+<script>function downloadExample(){const a=document.createElement('a');a.href='data:text/csv;charset=utf-8,patient_name%2Cage%2Cgender%0ASample%20Patient%20A%2C28%2CFemale%0ASample%20Patient%20B%2C42%2CMale';a.download='sample_patients.csv';a.click()}</script>{% endblock %}
